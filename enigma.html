@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Enigma</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    cursor: none; /* Cursor invisível */
+    overflow: hidden;
+  }
+
+  #container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 2;
+    position: relative;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  /* Olhos que seguem o cursor */
+  .eye {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255,255,255,0.05);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: transform 0.1s;
+  }
+</style>
+</head>
+<body>
+<div id="container">
+  <div id="step1">
+    <p>Digite o código:</p>
+    <input type="text" id="codeInput" placeholder="dd/mm/aaaa">
+    <button onclick="checkCode()">Entrar</button>
+  </div>
+  
+  <div id="step2" style="display:none;">
+    <p>Digite o nome do amigo:</p>
+    <input type="text" id="nameInput" placeholder="Nome">
+    <button onclick="checkName()">Enviar</button>
+  </div>
+
+  <div id="final" style="display:none;">
+    <p>uma conta, profuNda e escondida lhe espera, Um passo e eLa Lhe vera , fugindo</p>
+    <h1>NULL</h1>
+  </div>
+</div>
+
+<div class="eye" id="eye1"></div>
+<div class="eye" id="eye2"></div>
+
+<script>
+function checkCode() {
+  const code = document.getElementById('codeInput').value;
+  if (code === '01/12/2016') {
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'block';
+  } else {
+    alert('Código incorreto.');
+  }
+}
+
+function checkName() {
+  const name = document.getElementById('nameInput').value;
+  if (name === 'R1G') {
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('final').style.display = 'block';
+  } else {
+    alert('Nome incorreto.');
+  }
+}
+
+// Faz os olhos seguirem o cursor
+document.addEventListener('mousemove', (e) => {
+  const eyes = [document.getElementById('eye1'), document.getElementById('eye2')];
+  eyes.forEach((eye, i) => {
+    const offsetX = i === 0 ? -50 : 50; // Distribui os olhos
+    const offsetY = 0;
+    const x = e.clientX + offsetX;
+    const y = e.clientY + offsetY;
+    eye.style.transform = `translate(${x}px, ${y}px)`;
+  });
+});
+</script>
+</body>
+</html>
